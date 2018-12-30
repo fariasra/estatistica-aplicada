@@ -22,8 +22,8 @@ save(criando_dt_freq, file = "dt_classes_e_freq.RData")
 
 
 ##adicionando coluna de frequencia acumulada em um dataframe
-ex_2_1 <- function(dt, freq_abs = 4){
-  #requer o dt e a coluna onde estão as frequencias absolutas
+add_freq_acu <- function(dt, freq_abs = 4){
+  #requer o dt e a coluna onde estÃ£o as frequencias absolutas
   freq_acu <- c(dt[1, freq_abs])
   k<-2
   while (k <= length(dt[,freq_abs])){
@@ -34,7 +34,7 @@ ex_2_1 <- function(dt, freq_abs = 4){
   return(dt)
 }
 #salvando
-save(ex_2_1, file = "dt_freq_acu.RData")
+save(add_freq_acu, file = "dt_freq_acu.RData")
 
 
 #outliers
