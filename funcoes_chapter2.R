@@ -43,4 +43,31 @@ outliers <- function(lista){
   return(c(lista[lista < (quantile(lista, 1/4)[[1]] - IQR(lista)*1.5)], 
            lista[lista > (quantile(lista, 3/4)[[1]] + IQR(lista)*1.5)]))
 }
+#salvando a função outlier()
 save(outliers, file = "outliers.RData")
+
+#Calculando médias e desvio padrões
+calc_m_v_dp <- function(dados, peso = NULL){
+  if(length(peso) == length(dados)){
+    require(Hmisc)
+    cat(
+      "Amplitude: ", max(dados)-min(dados), "\n",
+      "Média Ponderada: ", weighted.mean(dados, peso), "\n",
+      "Variancia Ponderada: ", wtd.var(dados, peso, normwt = T), "\n",
+      "DP Ponderado: ", sqrt(wtd.var(dados, peso, normwt = T)), "\n",
+      "Mediana Ponderada: ", wtd.quantile(sort(dados), peso, 1/2, normwt = T), "\n\n"
+    )
+  }
+  else{
+    cat(
+      "Peso inexistente ou de tamanho diferente do tamanho do vetor de dados\n",
+      "Amplitude: ", max(dados)-min(dados), "\n",
+      "Média: ", mean(dados), "\n",
+      "Variancia: ", var(dados), "\n",
+      "DP: ", sd(dados), "\n",
+      "Mediana: ", median(sort(dados)), "\n\n"
+    )
+  }
+}
+#salvando a função calc_m_v_dp()
+save(calc_m_v_dp, file = "calculo_mean_dp.RData")
