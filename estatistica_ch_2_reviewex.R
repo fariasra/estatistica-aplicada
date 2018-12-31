@@ -215,3 +215,149 @@ resposta_27 <- calc_m_v_dp(exe_27)
 #Ex 28
 resposta_28 <- calc_m_v_dp(exe_28)
 
+#Ex 29
+#Média = 70, DP = 14.5
+#99.7% dos dados, em uma distribuição normal, estão dentro de 3 dp da média
+#então 70 +- 3x14.5
+c(70-3*14.5,70+3*14.5)
+
+#Ex 30
+#Média = 72.5, DP = 12.5
+#Intervalo = 60-85
+#72 - X = 60 portanto X = 12.5
+#72 + Y = 85 portanto Y = 12.5
+#O intervalo equivale a +- 1 dp da média, então contém 68% dos dados
+
+#Ex 31
+#Média = 36, DP = 8
+#Intervalo = 20-52
+#36 - X = 20 portanto X = 16 = -2DP
+#36 + Y = 52 portanto Y = 16 = +2DP
+#O intervalo equivale a +- 2 dp da média, então pelo teorema de Chebyshev,
+#o intervalo contém ao menos: 1 - 1/(k^2), como k = 2
+1-1/(2^2)
+#75% dos dados estão dentro do intervalo 20-52
+
+#Ex 32
+#Média = 7, DP = 2
+#Intervalo = 3-11
+#7 - X = 3 portanto X = 4 = -2DP
+#7 + Y = 11 portanto Y = 4 = +2DP
+#O intervalo equivale a +- 2 dp da média, então pelo teorema de Chebyshev,
+#o intervalo contém ao menos: 1 - 1/(k^2), como k = 2
+1-1/(2^2)
+#75% dos dados estão dentro do intervalo 3-11
+
+#Ex 33
+resposta_33 <- calc_m_v_dp(exe_33$televisores,exe_33$qtde_dom)
+#Em média, existem 2.5 televisores por casa
+
+#Ex 34
+resposta_34 <- calc_m_v_dp(exe_34$defeitos,exe_34$avioes)
+#Em média, cada avião apresenta 2.4 defeitos na fuselagem
+
+#Ex 35
+#Mudando a função calc_m_v_dp para calcular o coeficiente de variação, 
+#que é o DP dividido pela média
+calc_cv <- function(dados, peso = NULL){
+  if(length(peso) == length(dados)){
+    require(Hmisc)
+    return(((sqrt(wtd.var(dados,peso, normwt = T)))/wtd.mean(dados, peso))*100)
+  }
+  else{
+    return((sd(dados)/mean(dados))*100)
+  }
+}
+
+calc_cv(exe_35$calouros)
+calc_cv(exe_35$veteranos)
+#o desempenho dos calouros é mais variável que o desempenho dos veteranos
+
+#Ex36
+calc_cv(exe_36$idades)
+calc_cv(exe_36$anos_xp)
+#os anos de experiência variam mais que a idade
+
+
+##2.5
+#datasets usados
+
+exe_37 <- c(53,57,60,57,54,53,54,53,54,42,48,
+            53,47,47,50,48,42,42,54,54,60)
+
+exe_41 <- exe_13
+
+exe_42 <- c(173,145,205,192,197,227,156,240,172,185,208,185,190,167,212,228,190,184,195)
+
+#Ex 37
+#Os elementos são: min, q1, q2, q3 e max
+exe_37 <- sort(exe_37)
+cat(
+  "Mínimo = ", min(exe_37), "\n",
+  "Q1 = ", quantile(exe_37, 1/4), "\n",
+  "Q2 = ", quantile(exe_37, 2/4), "\n",
+  "Q3 = ", quantile(exe_37, 3/4), "\n",
+  "Máximo = ", max(exe_37), "\n\n"
+)
+
+#Ex 38
+#Amplitude interquartil é igual a IQR (interquartil range), i.e, q3-q1
+IQR(exe_37)
+
+#Ex 39
+boxplot(exe_37)
+
+#Ex 40
+length(exe_37[exe_37 < quantile(exe_37, 3/4)])
+
+#Ex 41
+IQR(exe_41)
+
+#Ex 42
+boxplot(exe_42)
+#Os dados parecem tem uma distribuição normal (simétrica)
+
+#Ex 43
+#se 65% dos estudantes tiraram 75 ou menos, então 35% tiraram mais que 75
+
+#Ex 44
+#Existem 665 estações, sendo 106 com maior audiencia, vamos supor q os dados estão
+#ordenados em ordem crescente, isso é, do de menor audiência para o maior, podemos achar o 
+#percentil fazendo
+round((1-(106/665))*100, digits = 0)
+#Isto é, 84º percentil
+
+#Ex 45-48
+#Média = 11830, DP = 2370
+
+#45a
+(16500-11830)/2370
+#45b
+#A camionete do exercício 45 tem 1,97dp a mais de capacidade de carga que a média das camionetes
+#dessa concessionária
+#45c
+#Incomum
+
+#46a
+(18000-11830)/2370
+#46b
+#A camionete do exercício 46 tem 2,60dp a mais de capacidade de carga que a média das camionetes
+#dessa concessionária
+#46c
+#Muito Incomum
+
+#47a
+(5500-11830)/2370
+#47b
+#A camionete do exercício 47 tem 2,67dp a menos de capacidade de carga que a média das camionetes
+#dessa concessionária
+#47c
+#Muito Incomum
+
+#48a
+(11300-11830)/2370
+#48b
+#A camionete do exercício 45 tem 0,22dp a menos de capacidade de carga que a média das camionetes
+#dessa concessionária
+#48c
+#Comum
